@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 public class LerpCubeScript : MonoBehaviour {
 
@@ -16,12 +17,15 @@ public class LerpCubeScript : MonoBehaviour {
 
     IEnumerator LerpCube()
     {
+        Stopwatch stp = new Stopwatch();
+        stp.Start();
         float t = 0;
 
         while (t < 1)
         {
+
             t += Time.deltaTime;
-            Debug.Log(t);
+            UnityEngine.Debug.Log(t);
             _cube.transform.position = Vector3.Lerp(_leftPosition, _rightPosition, t);
             if(t >=1)
             {
@@ -29,11 +33,13 @@ public class LerpCubeScript : MonoBehaviour {
             }
             yield return null;
         }
+        stp.Stop();
+        UnityEngine.Debug.Log("coroutine time taken: " + stp.Elapsed);
     }
 
     public void PrintDebugString()
     {
-        Debug.Log(this.ToString());
+        UnityEngine.Debug.Log(this.ToString());
     }
 
     public override string ToString()
