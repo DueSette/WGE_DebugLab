@@ -25,17 +25,35 @@ public class LerpCubeScript : MonoBehaviour {
         {
 
             t += Time.deltaTime;
-            UnityEngine.Debug.Log(t);
-            _cube.transform.position = Vector3.Lerp(_leftPosition, _rightPosition, t);
-            if(t >=1)
+            //UnityEngine.Debug.Log(t);
+
+            _cube.transform.position = MyLerp(SmoothStart(_leftPosition, _rightPosition, t), SmoothStop(_leftPosition, _rightPosition, t), t);
+            if (t >=1)
             {
                 _cube.transform.position = _rightPosition;
             }
             yield return null;
         }
         stp.Stop();
-        UnityEngine.Debug.Log("coroutine time taken: " + stp.Elapsed);
+        //UnityEngine.Debug.Log("coroutine time taken: " + stp.Elapsed);
     }
+
+    public Vector3 MyLerp(Vector3 a, Vector3 b, float t)
+    {
+        
+        return a + (b - a) * t;
+    }
+
+    public Vector3 SmoothStart(Vector3 a, Vector3 b, float t)
+    {
+        return a + (b - a) * t * t;
+    }
+
+    public Vector3 SmoothStop(Vector3 a, Vector3 b, float t)
+    {
+        return a + (b - a) * (1 - (1 - t) * (1 - t));
+    }
+
 
     public void PrintDebugString()
     {
@@ -47,6 +65,7 @@ public class LerpCubeScript : MonoBehaviour {
         string s;
         s = (_cube ? "Cube positon = " + _cube.transform.position: "Cube not instantiated ") + "\n" + "Left Position = " + _leftPosition + "\n" + "Right Position = " + _rightPosition;
         return s;
-    }
+    }
+
 
 }
