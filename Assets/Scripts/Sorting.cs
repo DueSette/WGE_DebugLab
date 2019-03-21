@@ -35,7 +35,7 @@ public class Sorting : MonoBehaviour {
     }
 
     //Selection Sort
-    void SelectionSort()
+    void SelectionSort()//add int[] target here to make this function work with any int array
     {
         for (j = 0; j < numbers.Length - 1; j++)
         {
